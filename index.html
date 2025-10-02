@@ -1,0 +1,1826 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>dm to dot com — Premium Builds</title>
+  <meta name="description" content="Luxury websites, apps, and startup setup. Visual-first craft with cinematic motion."/>
+  <meta name="theme-color" content="#0B0B0D">
+  <meta property="og:title" content="dm to dot com — Premium Builds"/>
+  <meta property="og:description" content="Luxury websites, apps, and startup setup. Visual-first craft with cinematic motion."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Inter for UI, Cormorant Garamond for Headlines, Cinzel for Wordmark -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop"/>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <style>
+    :root{
+      --black:#000;--matte:#0B0B0D;--gold:#C7A15A;--soft-gold:#E4C988;--warm:#F7F5EF;--ink:#EDEDED;--muted:#B9B9B9;
+      --radius:22px;--shadow:0 12px 36px rgba(231,205,140,.12);--ring:rgba(231,205,140,.25);
+      --space-2:8px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--space-16:64px;--space-24:96px;--space-32:128px;
+      --nav-h:88px;--nav-h-shrink:64px;
+      --bp-xl:1200px;--bp-lg:992px;--bp-md:768px;--bp-sm:560px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{margin:0; padding-top: var(--nav-h);
+      background:var(--matte);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}
+    .container{max-width:min(1280px,92vw);margin:0 auto;padding:0 var(--space-6)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    
+    /* Global film grain + vignette */
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:
+      radial-gradient(900px 400px at 50% -10%,rgba(231,205,140,.14),transparent 60%),
+      radial-gradient(780px 260px at 50% 110%,rgba(231,205,140,.08),transparent 60%),
+      radial-gradient(100% 120% at 50% 0%,rgba(0,0,0,.0),rgba(0,0,0,.45));
+      mix-blend-mode:screen}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 200 200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.06"/></svg>');opacity:.35}
+
+    /* Scroll progress */
+    .progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--soft-gold),var(--gold));width:0;z-index:120}
+
+    /* NAVBAR */
+    header#nav{position:fixed; top:0; left:0; right:0; z-index:100;
+      background:rgba(11,11,13,.7);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid rgba(231,205,140,.18)}
+    .nav-inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:var(--nav-h);transition:height .4s ease}
+    .nav-left,.nav-right{display:flex;gap:var(--space-6);align-items:center}
+    .nav-left{justify-content:flex-start}
+    .nav-right{justify-content:flex-end}
+    .nav-left a,.nav-right a{position:relative;padding:.5rem 0;color:var(--muted)}
+    .nav-left a[aria-current="page"], .nav-left a:hover, .nav-right a:hover{color:var(--warm)}
+    .logo{justify-self:center;font-family:"Cinzel",serif;font-weight:700;letter-spacing:.5px;color:var(--warm);font-size:clamp(22px,2.2vw,30px);line-height:1;transform-origin:center}
+    .logo .mark{background:linear-gradient(180deg,var(--soft-gold),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 6px 18px rgba(231,205,140,.12)}
+    .cta{padding:.65rem 1rem;border-radius:999px;border:1px solid var(--gold);color:#111;background:linear-gradient(180deg,var(--soft-gold),var(--gold));box-shadow:0 0 0 1px rgba(231,205,140,.25) inset,0 10px 25px rgba(231,205,140,.15)}
+    .underline{position:absolute;height:2px;background:linear-gradient(90deg,var(--soft-gold),var(--gold));bottom:10px;border-radius:2px;transition:transform .35s ease,width .35s ease}
+    .nav-wrap{position:relative}
+    .hamburger{display:none;cursor:pointer;background:transparent;border:0}
+    .hamburger span{display:block;width:26px;height:2px;background:var(--soft-gold);margin:6px 0}
+
+    /* Mobile overlay */
+    #mobileOverlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none}
+    #mobileOverlay .sheet{position:absolute;inset:0;display:flex;flex-direction:column;gap:24px;align-items:center;justify-content:center}
+    #mobileOverlay a{font-size:24px;color:var(--warm)}
+
+    /* Cursor glow */
+    .cursor-glow{position:fixed;inset:auto auto 0 0;width:220px;height:220px;border-radius:50%;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle, rgba(231,205,140,.22), rgba(231,205,140,0) 60%);transform:translate(-50%,-50%);z-index:5;opacity:.5}
+
+    /* HERO */
+    #hero{min-height:100svh;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(120% 100% at 50% 0%,#0b0b0d 0%,#000 60%)}
+    .halo{position:absolute;inset:-20% -10% -10% -10%;background:
+      conic-gradient(from 0deg at 50% 50%, rgba(231,205,140,.12), transparent 30%, rgba(231,205,140,.18), transparent 60%, rgba(231,205,140,.1)),
+      radial-gradient(50% 40% at 50% 45%, rgba(231,205,140,.15), transparent 60%),
+      radial-gradient(30% 20% at 70% 30%, rgba(231,205,140,.12), transparent 60%),
+      radial-gradient(30% 20% at 30% 70%, rgba(231,205,140,.1), transparent 60%);
+      animation:spin 28s linear infinite;filter:saturate(120%)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .ring{position:absolute;border:1px solid var(--ring);border-radius:50%;inset:auto;width:min(74vmin,780px);height:min(74vmin,780px);opacity:.5;box-shadow:0 0 80px rgba(231,205,140,.06) inset}
+    .ring.r2{width:min(92vmin,900px);height:min(92vmin,900px);opacity:.35}
+    .ring.r3{width:min(110vmin,1080px);height:min(110vmin,1080px);opacity:.25}
+
+    .particles{position:absolute;inset:0;pointer-events:none}
+    .dot{position:absolute;width:6px;height:6px;border-radius:50%;background:linear-gradient(180deg,var(--soft-gold),var(--gold));box-shadow:0 0 20px rgba(231,205,140,.45)}
+
+    .marquee{position:absolute;bottom:4vh;width:200%;display:flex;gap:24px;animation:mar 24s linear infinite}
+    .marquee img{height:64px;opacity:.85;border-radius:10px;border:1px solid rgba(231,205,140,.2);transform:scale(1);animation:kb 16s ease-in-out infinite}
+    @keyframes mar{to{transform:translateX(-50%)}}
+    @keyframes kb{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+    .hero-copy{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:0 5vw;pointer-events:none}
+    .hero-title{margin:0 0 18px;font-family:"Cormorant Garamond",serif;line-height:1.05;letter-spacing:.6px;font-weight:700;font-size:clamp(36px,8.5vw,112px);color:var(--warm)}
+    .hero-title .word{display:inline-block;pointer-events:auto;cursor:default;background:linear-gradient(180deg,var(--warm),#bdbdbd);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 10px 30px rgba(231,205,140,.15)}
+    .hero-title .accent{background:linear-gradient(180deg,var(--soft-gold),var(--gold));-webkit-background-clip:text;background-clip:text}
+    .hero-sub{margin:6px 0 22px;color:var(--muted);font-size:clamp(14px,2.2vw,18px)}
+    .hero-cta{display:flex;gap:12px;justify-content:center;pointer-events:auto}
+    .cta.ghost{background:transparent;color:var(--soft-gold);border:1px solid var(--gold)}
+
+    section{padding:var(--space-16) 0; scroll-margin-top: var(--nav-h); }
+    .section-title{font-family:"Cormorant Garamond",serif;font-size:clamp(28px,4vw,48px);color:var(--warm);margin:0 0 var(--space-8)}
+
+    .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}
+    .card-min{padding:24px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(231,205,140,.16);transition:transform .35s ease, box-shadow .35s ease}
+    .card-min:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+    .card-min h3{margin:10px 0 6px;font-size:18px;color:var(--warm)}
+    .card-min p{margin:0;color:var(--muted);font-size:14px}
+
+    .big-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+    .big-tile{aspect-ratio:4/3;border-radius:18px;overflow:hidden;border:1px solid rgba(231,205,140,.18);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));position:relative;transition:transform .4s ease, box-shadow .4s ease}
+    .big-tile:hover{transform:translateY(-8px);box-shadow:0 18px 45px rgba(231,205,140,.18)}
+    .big-tile img{width:100%;height:100%;object-fit:cover;filter:saturate(110%) contrast(105%)}
+    .big-tile .cap{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.45);padding:8px 10px;border-radius:10px;border:1px solid rgba(231,205,140,.25)}
+
+    #packages{position:relative}
+    .carousel{display:flex;gap:0;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain}
+    .carousel::-webkit-scrollbar{display:none;width:0;height:0;background:transparent}
+    .pkg{min-width:280px;max-width:320px;margin-right:-50px;border-radius:22px;padding:24px;background:radial-gradient(120% 120% at 50% -10%,rgba(231,205,140,.18),rgba(255,255,255,.02) 60%),linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(231,205,140,.25);box-shadow:0 10px 40px rgba(231,205,140,.08);transform-style:preserve-3d;transition:transform .4s ease, box-shadow .4s ease, filter .4s ease;position:relative}
+    .pkg:hover{transform:translateY(-20px) rotate3d(1,-1,0,6deg);box-shadow:0 25px 60px rgba(231,205,140,.18)}
+    .pkg.card2{filter:hue-rotate(150deg)}
+    .pkg.card3{filter:hue-rotate(300deg)}
+    .pkg.card4{filter:hue-rotate(90deg)}
+    .pkg h4{font-family:"Cormorant Garamond",serif;margin:0 0 8px;color:var(--warm);font-size:22px}
+    .badge{display:inline-block;font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(231,205,140,.35);color:var(--soft-gold);margin-bottom:10px}
+    .desc{color:var(--muted);font-size:14px;margin:8px 0 12px}
+    .cta-mini{display:inline-block;padding:.5rem .9rem;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--soft-gold);font-weight:600}
+    .cta-mini:hover{background:linear-gradient(180deg,var(--soft-gold),var(--gold));color:#111}
+    .chip{position:absolute;top:12px;right:12px;font-size:11px;padding:6px 10px;border:1px solid rgba(231,205,140,.35);border-radius:999px;background:rgba(0,0,0,.35)}
+    .chip.shopify{left:12px;right:auto}
+
+    .bands{display:grid;gap:18px}
+    .band{position:relative;border-radius:18px;padding:26px;border:1px solid rgba(231,205,140,.16);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02))}
+    .band .num{font-size:54px;font-weight:800;color:rgba(255,255,255,.085);letter-spacing:2px}
+    .band h5{margin:8px 0 4px;color:var(--warm);font-size:20px}
+    .band p{margin:0;color:var(--muted)}
+    .ellipse{position:absolute;inset:auto auto -10px 60%;width:180px;height:36px;border:1px solid rgba(231,205,140,.35);border-radius:999px;filter:blur(2px);opacity:.35}
+
+    /* SHOWREEL (auto-scrolling filmstrip) */
+    .reel-wrap{position:relative;overflow:hidden;border-radius:18px;border:1px solid rgba(231,205,140,.18);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));}
+    .reel-track{display:flex;gap:16px;will-change:transform;padding:16px}
+    .reel-item{flex:0 0 clamp(260px,28vw,420px);aspect-ratio:16/10;border-radius:14px;overflow:hidden;position:relative;border:1px solid rgba(231,205,140,.18);box-shadow:0 8px 26px rgba(231,205,140,.08)}
+    .reel-item img{width:100%;height:100%;object-fit:cover;filter:saturate(110%) contrast(105%);transition:transform .5s ease}
+    .reel-item:hover img{transform:scale(1.06)}
+    .reel-item .cap{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.45);border:1px solid rgba(231,205,140,.25);padding:6px 10px;border-radius:10px;font-size:12px}
+
+    .work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+    .work-card{border-radius:18px;overflow:hidden;border:1px solid rgba(231,205,140,.18);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));position:relative;transition:transform .35s ease, box-shadow .35s ease}
+    .work-card:hover{transform:translateY(-6px);box-shadow:0 15px 40px rgba(231,205,140,.15)}
+    .work-card .thumb{aspect-ratio:16/10;background-size:cover;background-position:center}
+
+    details{border:1px solid rgba(231,205,140,.18);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.03)}
+    details+details{margin-top:10px}
+    summary{cursor:pointer;color:var(--warm);font-weight:600}
+    details p{color:var(--muted)}
+
+    .shell{background:#0e0e11;border:1px solid rgba(231,205,140,.18);border-radius:20px;box-shadow:0 30px 80px rgba(231,205,140,.08), 0 1px 0 rgba(231,205,140,.2) inset;margin:32px auto}
+    .contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;padding:42px}
+    .intro small{letter-spacing:.14em;color:#a9a9a9;text-transform:uppercase}
+    .intro h3{margin:8px 0 12px;font-size:40px;line-height:1.08;color:var(--warm)}
+    .intro p{margin:0 0 18px;color:var(--muted);max-width:46ch}
+    .info{display:grid;gap:14px;margin-top:18px}
+    .info a{display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+    .info a:hover{color:var(--warm)}
+    .info .chip{display:inline-grid;place-items:center;flex:0 0 auto;width:28px;height:28px;border-radius:8px;border:1px solid rgba(231,205,140,.35);background:linear-gradient(180deg,rgba(231,205,140,.18),rgba(231,205,140,.06))}
+
+    form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    form .full{grid-column:1/-1}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(231,205,140,.25);background:rgba(0,0,0,.35);color:var(--warm)}
+    textarea{min-height:120px;resize:vertical}
+
+    .toast{position:fixed;right:16px;bottom:16px;background:linear-gradient(180deg,var(--soft-gold),var(--gold));color:#111;padding:12px 16px;border-radius:10px;box-shadow:0 10px 30px rgba(231,205,140,.25);display:none}
+
+    .wa-float{position:fixed;right:18px;bottom:18px;border-radius:999px;border:1px solid var(--gold);background:linear-gradient(180deg,var(--soft-gold),var(--gold));color:#111;padding:.8rem 1rem;font-weight:700;z-index:55}
+
+    footer{padding:24px 0;border-top:1px solid rgba(231,205,140,.18);color:var(--muted);font-size:14px}
+
+    @media (max-width:1100px){.cards{grid-template-columns:repeat(3,1fr)}.work-grid{grid-template-columns:repeat(2,1fr)}.big-grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:720px){
+      .nav-inner{grid-template-columns:auto 1fr auto}
+      .nav-left{display:none}
+      .nav-right{display:flex;justify-content:flex-end}
+      .nav-right .cta{display:none}
+      .hamburger{display:block}
+      .cards{grid-template-columns:1fr 1fr}
+      .work-grid{grid-template-columns:1fr}
+      .big-grid{grid-template-columns:1fr 1fr}
+      form{grid-template-columns:1fr}
+      .carousel{gap:12px;scroll-snap-type:x mandatory;padding:0 var(--space-6)}
+      .pkg{margin-right:0;scroll-snap-align:center}
+      .marquee img{height:48px}
+      .card3d{width:88vw}
+      .contact-grid{grid-template-columns:1fr;gap:18px;padding:24px}
+    }
+    @media (max-width:480px){
+      .cards{grid-template-columns:1fr}
+      .big-grid{grid-template-columns:1fr}
+      .section-title{font-size:clamp(24px,7vw,34px)}
+    }
+    @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  
+    /* Chatbot (drop-in, theme-aware) */
+    .chat-toggle{position:fixed;right:18px;bottom:86px;z-index:56;border-radius:999px;border:1px solid var(--gold);background:linear-gradient(180deg,var(--soft-gold),var(--gold));color:#111;padding:.8rem 1rem;font-weight:800;box-shadow:0 10px 25px rgba(231,205,140,.25)}
+    .chat-panel{position:fixed;right:18px;bottom:86px;z-index:57;width:min(360px,92vw);max-height:70vh;border:1px solid rgba(231,205,140,.25);border-radius:18px;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);display:none;flex-direction:column;box-shadow:0 22px 60px rgba(231,205,140,.2)}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(231,205,140,.18)}
+    .chat-header .title{display:flex;align-items:center;gap:10px;color:var(--warm);font-weight:700}
+    .chat-body{padding:14px;overflow:auto;display:flex;flex-direction:column;gap:10px}
+    .bubble{max-width:80%;padding:10px 12px;border-radius:14px;border:1px solid rgba(231,205,140,.25);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));color:var(--ink)}
+    .bubble.you{align-self:flex-end;border-color:rgba(231,205,140,.4);background:linear-gradient(180deg,rgba(231,205,140,.22),rgba(231,205,140,.08));color:#111}
+    .chat-input{display:flex;gap:8px;padding:12px;border-top:1px solid rgba(231,205,140,.18)}
+    .chat-input input{flex:1}
+    .chip-quick{display:inline-block;font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(231,205,140,.35);color:var(--soft-gold);cursor:pointer}
+    .quick-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+    @media (max-width:720px){.chat-panel{right:12px;bottom:84px}}
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <!-- NAVBAR -->
+  <header id="nav" role="banner">
+    <div class="container nav-inner">
+      <nav class="nav-left nav-wrap" aria-label="Primary">
+        <a href="#hero" class="navlink" aria-current="page">Home</a>
+        <a href="#services" class="navlink">Services</a>
+        <a href="#packages-v4" class="navlink">Packages</a>
+        <i id="underline" class="underline" aria-hidden="true"></i>
+      </nav>
+      <div class="logo" id="logo" aria-label="dm to dot com wordmark"><span class="mark">dm to dot com</span></div>
+      <div class="nav-right">
+        <a href="#contact" class="cta">Get a Quote</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobileOverlay" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Overlay -->
+  <div id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="sheet">
+      <a href="#hero" class="molink">Home</a>
+      <a href="#services" class="molink">Services</a>
+      <a href="#add-services" class="molink">Add-ons</a>
+      <a href="#packages" class="molink">Packages</a>
+      <a href="#process" class="molink">Process</a>
+      <a href="#work" class="molink">Work</a>
+      <a href="#contact" class="cta">Get a Quote</a>
+    </div>
+  </div>
+
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <section id="hero" aria-label="Visual Intro">
+    <div class="halo" aria-hidden="true"></div>
+    <div class="ring r1" aria-hidden="true"></div>
+    <div class="ring r2" aria-hidden="true"></div>
+    <div class="ring r3" aria-hidden="true"></div>
+
+    <div class="hero-copy">
+      <h1 class="hero-title" aria-label="Design Beyond Ordinary.">
+        <span class="word">Design</span><br/>
+        <span class="word accent">Beyond</span><br/>
+        <span class="word">Ordinary.</span>
+      </h1>
+      <p class="hero-sub">Cinematic websites, apps & brand systems.</p>
+      <div class="hero-cta">
+        <a href="#packages" class="cta">See packages</a>
+        <a href="#work" class="cta ghost">View work</a>
+      </div>
+    </div>
+
+    <div class="particles" id="particles" aria-hidden="true"></div>
+    
+    <div class="marquee" aria-hidden="true">
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt=""/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" alt=""/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt=""/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1557264337-e8a93017fe92?q=80&w=1200&auto=format&fit=crop" alt=""/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1529336953121-a52d6f1a0162?q=80&w=1200&auto=format&fit=crop" alt=""/>
+      <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop" alt=""/>
+    </div>
+  </section>
+
+<!-- ===== WHAT WE DO (6 cards, with SVG icons) ===== -->
+<section id="what-we-do" class="what-we-do">
+  <style>
+    .what-we-do{
+      background:#0b0b0d;padding:80px 20px;color:#fff
+    }
+    .what-we-do h2{
+      font-family:"Cinzel",serif;font-size:clamp(28px,3.2vw,44px);
+      text-align:center;margin:0 0 36px;color:#f8f1dd
+    }
+
+    .wwd-grid{
+      max-width:1100px;margin:0 auto;
+      display:grid;gap:22px;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+
+    .wwd-card{
+      position:relative;overflow:hidden;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(199,161,90,.22);
+      border-radius:16px;padding:26px 22px;
+      box-shadow:0 8px 18px rgba(0,0,0,.35);
+      transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+      opacity:0;transform:translateY(16px);
+    }
+    .wwd-card.show{opacity:1;transform:translateY(0);transition:opacity .5s ease, transform .5s ease;}
+    .wwd-card:hover{transform:translateY(-6px);border-color:#c7a15a;box-shadow:0 14px 32px rgba(199,161,90,.22)}
+
+    /* icon */
+    .wwd-icon{
+      width:42px;height:42px;margin-bottom:14px;
+      display:grid;place-items:center;
+    }
+    .wwd-icon svg{width:100%;height:100%;fill:#c7a15a;}
+
+    .wwd-title{
+      position:relative;
+      font-family:"Cinzel",serif;
+      font-weight:700;letter-spacing:.4px;
+      color:#e4c988;
+      font-size:18px;margin:2px 0 12px;
+      display:inline-block;
+    }
+    .wwd-title::after{
+      content:"";position:absolute;left:0;bottom:-6px;height:2px;
+      width:0;background:linear-gradient(90deg,#e4c988,#c7a15a);
+      border-radius:2px;transition:width .35s ease;
+    }
+    .wwd-card:hover .wwd-title::after{width:100%}
+
+    .wwd-text{font-size:14px;line-height:1.55;color:#cfcfcf}
+  </style>
+
+  <h2>What We Do</h2>
+
+  <div class="wwd-grid" id="wwdGrid">
+    <article class="wwd-card">
+      <div class="wwd-icon">
+        <!-- Web Design Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 4h18v14H3z" fill="none" stroke="#c7a15a" stroke-width="2"/><path d="M3 8h18" stroke="#c7a15a" stroke-width="2"/></svg>
+      </div>
+      <h3 class="wwd-title">Web Design &amp; Dev</h3>
+      <p class="wwd-text">Fast, beautiful, conversion-focused websites built with clean SEO-friendly code.</p>
+    </article>
+
+    <article class="wwd-card">
+      <div class="wwd-icon">
+        <!-- Portfolio Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" ry="2" stroke="#c7a15a" fill="none" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="#c7a15a" stroke-width="2" fill="none"/></svg>
+      </div>
+      <h3 class="wwd-title">Portfolio Sites</h3>
+      <p class="wwd-text">Showcase your work with style—case studies, galleries, and smooth contact flows.</p>
+    </article>
+
+    <article class="wwd-card">
+      <div class="wwd-icon">
+        <!-- App Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2" ry="2" stroke="#c7a15a" fill="none" stroke-width="2"/><circle cx="12" cy="18" r="1" fill="#c7a15a"/></svg>
+      </div>
+      <h3 class="wwd-title">App Development</h3>
+      <p class="wwd-text">Cross-platform mobile apps for iOS/Android with one clean codebase and integrations.</p>
+    </article>
+
+    <article class="wwd-card">
+      <div class="wwd-icon">
+        <!-- Brand Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#c7a15a" fill="none" stroke-width="2"/><path d="M12 7v5l3 2" stroke="#c7a15a" stroke-width="2"/></svg>
+      </div>
+      <h3 class="wwd-title">Brand Identity</h3>
+      <p class="wwd-text">Logo, palette, and typography systems crafted to make your brand unforgettable.</p>
+    </article>
+
+    <article class="wwd-card">
+      <div class="wwd-icon">
+        <!-- Startup Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14" stroke="#c7a15a" stroke-width="2"/></svg>
+      </div>
+      <h3 class="wwd-title">Startup Setup</h3>
+      <p class="wwd-text">Domain, hosting, business email, analytics, and payments—everything to launch quickly.</p>
+    </article>
+
+    <article class="wwd-card">
+      <div class="wwd-icon">
+        <!-- Marketing Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 11h18M6 7h12M9 15h6" stroke="#c7a15a" stroke-width="2"/></svg>
+      </div>
+      <h3 class="wwd-title">Digital Marketing</h3>
+      <p class="wwd-text">SEO, social media campaigns, ads, and growth strategies tailored to your audience.</p>
+    </article>
+  </div>
+
+  <script>
+    // Staggered reveal
+    (function(){
+      const cards=document.querySelectorAll('#wwdGrid .wwd-card');
+      const io=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            const i=[...cards].indexOf(e.target);
+            e.target.style.transitionDelay=(i*80)+'ms';
+            e.target.classList.add('show');
+            io.unobserve(e.target);
+          }
+        });
+      },{threshold:.12});
+      cards.forEach(c=>io.observe(c));
+    })();
+  </script>
+</section>
+
+ <!-- ========= PACKAGES (T0 / T1 / T2 / T3) — Premium Black & Gold ========= -->
+<section id="packages-v4" aria-label="Pricing Plans">
+  <style>
+    #packages-v4{
+      --bg:#0b0b0d;
+      --panel:rgba(255,255,255,.045);
+      --panel-2:rgba(255,255,255,.02);
+      --stroke:rgba(231,205,140,.22);
+      --stroke-strong:rgba(231,205,140,.40);
+      --gold:#C7A15A;
+      --soft:#E4C988;
+      --ink:#EDEDED;
+      --muted:#BEBEBE;
+      --ok:#A7F3A1;
+      --no:#FF7B7B;
+      --shadow:0 18px 40px rgba(231,205,140,.14);
+      --shadow-lg:0 28px 70px rgba(231,205,140,.22);
+      background:
+        radial-gradient(1200px 520px at 50% -8%, rgba(231,205,140,.10), transparent 60%),
+        radial-gradient(1000px 380px at 50% 110%, rgba(231,205,140,.07), transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      padding:78px 20px 84px;
+    }
+    #packages-v4 .wrap{max-width:min(1180px,94vw);margin:0 auto}
+    #packages-v4 .headline{
+      margin:0 0 12px;text-align:center;
+      font-family:"Cinzel",serif;font-weight:700;letter-spacing:.2px;
+      font-size:clamp(28px,3.6vw,44px);color:#F7F5EF
+    }
+    #packages-v4 .sub{margin:0 auto 36px;max-width:70ch;text-align:center;color:var(--muted);font-size:15px}
+
+    /* Grid */
+    #packages-v4 .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:stretch}
+    
+    /* Card */
+    #packages-v4 .card{
+      position:relative;display:flex;flex-direction:column;min-height:560px;
+      border-radius:20px;border:1px solid var(--stroke);
+      background:linear-gradient(180deg,var(--panel),var(--panel-2));
+      box-shadow:var(--shadow);
+      transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+      overflow:hidden;isolation:isolate;
+    }
+    #packages-v4 .card:hover{transform:translateY(-8px);border-color:var(--stroke-strong);box-shadow:var(--shadow-lg)}
+
+    /* Badges */
+    #packages-v4 .badges{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px 0}
+    #packages-v4 .badge{
+      font-size:12px;line-height:1;padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(231,205,140,.28);color:var(--soft);background:rgba(0,0,0,.35);
+      font-weight:700;letter-spacing:.1px
+    }
+    #packages-v4 .badge.gold{border-color:rgba(231,205,140,.42);background:linear-gradient(180deg,rgba(231,205,140,.18),rgba(231,205,140,.05));color:#FFE7AE}
+
+    /* Head */
+    #packages-v4 .head{padding:10px 20px 0}
+    #packages-v4 .title{
+      margin:10px 0 6px;font-size:clamp(19px,2.2vw,24px);
+      font-family:"Cormorant Garamond",serif;font-weight:700;letter-spacing:.2px;color:#FFF6DE
+    }
+    #packages-v4 .price{
+      display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+      font-size:clamp(26px,3vw,32px);font-weight:800;
+      background:linear-gradient(180deg,var(--soft),var(--gold));
+      -webkit-background-clip:text;background-clip:text;color:transparent
+    }
+    #packages-v4 .note{color:var(--muted);font-size:12px}
+
+    /* Features */
+    #packages-v4 .features{list-style:none;margin:16px 0 0;padding:0 22px 0;display:grid;gap:11px}
+    #packages-v4 .li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:flex-start}
+    #packages-v4 .tick{
+      height:20px;width:20px;border-radius:8px;display:grid;place-items:center;
+      border:1px solid rgba(231,205,140,.28);
+      background:linear-gradient(180deg,rgba(231,205,140,.18),rgba(231,205,140,.06));
+      font-size:12px;color:var(--ok);font-weight:900
+    }
+    #packages-v4 .x .tick{color:var(--no)}
+    #packages-v4 .copy{color:#E6E6E6;font-size:14px;line-height:1.45}
+
+    /* CTA */
+    #packages-v4 .cta{
+      margin:18px 20px 0;display:block;text-align:center;text-decoration:none;
+      padding:.85rem 1rem;border-radius:999px;border:1px solid var(--gold);
+      color:#111;font-weight:800;background:linear-gradient(180deg,var(--soft),var(--gold));
+      box-shadow:0 0 0 1px rgba(231,205,140,.25) inset, 0 12px 24px rgba(231,205,140,.18);
+      transition:filter .25s ease, transform .2s ease
+    }
+    #packages-v4 .cta:hover{filter:saturate(110%);transform:translateY(-1px)}
+    #packages-v4 .meta{margin:10px 20px 22px;color:var(--muted);font-size:12px}
+    #packages-v4 .spacer{flex:1}
+  </style>
+
+  <div class="wrap">
+    <h2 class="headline">Flexible Pricing Plans</h2>
+    <p class="sub">Choose the right tier for your stage: launch fast, grow steadily, or scale big.</p>
+
+    <div class="grid">
+      <!-- T0 -->
+      <article class="card">
+        <div class="badges">
+          <span class="badge">T0 — Starter Landing</span>
+          <span class="badge gold">Quick Launch</span>
+        </div>
+        <div class="head">
+          <h3 class="title">One-page storefront</h3>
+          <div class="price">₹999 <span class="note">· one-time</span></div>
+        </div>
+        <ul class="features">
+          <li class="li"><span class="tick">✓</span><span class="copy">Premium single page (black & gold)</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Showcase up to <strong>5 products</strong></span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">WhatsApp / Call order CTAs</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Hero, features, FAQs, policy snippets</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Mobile-first, SEO basics, SSL, Analytics</span></li>
+          <li class="li x"><span class="tick">✕</span><span class="copy">No online payments or cart</span></li>
+        </ul>
+        <span class="spacer"></span>
+        <a class="cta" href="#contact">Start @ ₹999</a>
+        <p class="meta">Timeline: 1–2 days · Best for quick launch and testing demand.</p>
+      </article>
+
+      <!-- T1 -->
+      <article class="card">
+        <div class="badges">
+          <span class="badge">T1 — One-Page Mini-Catalog</span>
+          <span class="badge gold">Most Picked</span>
+        </div>
+        <div class="head">
+          <h3 class="title">Enquiry cart on a single page</h3>
+          <div class="price">₹1,999 <span class="note">· one-time</span></div>
+        </div>
+        <ul class="features">
+          <li class="li"><span class="tick">✓</span><span class="copy">Everything in T0 included</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Sticky <strong>mini-cart</strong> (enquiry cart)</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Cart summary sent via WhatsApp</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Optional Razorpay pay-links per product</span></li>
+          <li class="li x"><span class="tick">✕</span><span class="copy">No full cart math, stock, coupons</span></li>
+        </ul>
+        <span class="spacer"></span>
+        <a class="cta" href="#contact">Choose T1</a>
+        <p class="meta">Timeline: 2–3 days · Ideal when you have 5 products ready.</p>
+      </article>
+
+      <!-- T2 -->
+      <article class="card">
+        <div class="badges">
+          <span class="badge">T2 — Small Catalog</span>
+          <span class="badge gold">Growing Stores</span>
+        </div>
+        <div class="head">
+          <h3 class="title">6–20 products + checkout</h3>
+          <div class="price">₹4,999–6,999 <span class="note">· one-time</span></div>
+        </div>
+        <ul class="features">
+          <li class="li"><span class="tick">✓</span><span class="copy">Home + Catalog + Product pages</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Basic cart + <strong>Razorpay checkout</strong></span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Light categories, filters & coupon codes</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Order confirmation email + success page</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Policy pages (shipping, returns, privacy, terms)</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">SEO basics + structured data</span></li>
+        </ul>
+        <span class="spacer"></span>
+        <a class="cta" href="#contact">Get T2</a>
+        <p class="meta">Timeline: 1–2 weeks · Add-ons: shipping API, inventory controls, variants.</p>
+      </article>
+
+      <!-- T3 -->
+      <article class="card">
+        <div class="badges">
+          <span class="badge">T3 — Full Store</span>
+          <span class="badge gold">Scale Ready</span>
+        </div>
+        <div class="head">
+          <h3 class="title">20–100+ products, advanced</h3>
+          <div class="price">₹9,999–19,999 <span class="note">· one-time</span></div>
+        </div>
+        <ul class="features">
+          <li class="li"><span class="tick">✓</span><span class="copy">Everything in T2 + advanced categories</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Variants, inventory & GST/tax logic</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Coupons, upsells, search, wish-list</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Abandoned-cart recovery</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Blog/CMS for content marketing</span></li>
+          <li class="li"><span class="tick">✓</span><span class="copy">Admin dashboard (custom / Shopify / Woo)</span></li>
+        </ul>
+        <span class="spacer"></span>
+        <a class="cta" href="#contact">Discuss T3</a>
+        <p class="meta">Timeline: 2–4 weeks · Best when you’re scaling operations.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<!-- ========= /PACKAGES ========= -->
+
+<!-- =====================  SHOPIFY PACKAGES (Optimized)  ===================== -->
+<section id="shopify-packages" class="sp-wrap" aria-labelledby="spHeading">
+  <style>
+    /* ---- tokens ---- */
+    .sp-wrap{--bg:#0b0b0d;--ink:#eee;--mut:#bdbdbd;--gold:#c7a15a;--soft:#e4c988;--ring:rgba(231,205,140,.28);
+             --card:rgba(255,255,255,.03);--line:rgba(199,161,90,.22);--shadow:0 16px 60px rgba(0,0,0,.45)}
+    .sp-wrap{background:var(--bg);color:var(--ink);padding:76px 20px}
+    .sp-container{max-width:1200px;margin:0 auto}
+
+    /* ---- head ---- */
+    .sp-eyebrow{display:inline-block;padding:.3rem .7rem;border:1px solid var(--ring);border-radius:999px;
+      font-size:.82rem;letter-spacing:.08em;color:var(--soft);margin-bottom:10px}
+    .sp-heading{font-family:"Cinzel",serif;font-size:clamp(30px,3.4vw,46px);color:#f8f1dd;margin:0 0 8px}
+    .sp-note{color:var(--mut);margin:0 0 26px;font-size:.98rem}
+    .sp-note strong{color:#fff}
+
+    /* ---- grid ---- */
+    .sp-grid{display:grid;gap:22px;grid-template-columns:repeat(12,1fr)}
+    .sp-card{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:18px;
+      padding:26px 22px;position:relative;box-shadow:var(--shadow);isolation:isolate;overflow:hidden}
+    @media (min-width:760px){.sp-card{grid-column:span 6}}
+    @media (min-width:980px){.sp-card{grid-column:span 4}}
+
+    /* gradient border glow */
+    .sp-card::before{content:"";position:absolute;inset:-1px;border-radius:20px;z-index:-1;
+      background:conic-gradient(from 210deg,transparent 0 60%,rgba(231,205,140,.22),transparent 75%);
+      filter:blur(10px);opacity:.25;transition:opacity .3s ease}
+    .sp-card:hover::before{opacity:.45}
+    .sp-card:hover{transform:translateY(-6px);border-color:var(--gold)}
+
+    /* ribbons / badges */
+    .sp-badge{position:absolute;top:14px;left:14px;display:inline-flex;gap:6px;align-items:center;
+      font-weight:800;font-size:.72rem;color:#111;border-radius:999px;padding:.34rem .6rem;
+      background:linear-gradient(180deg,var(--soft),var(--gold))}
+    .sp-badge[data-variant="popular"]{right:14px;left:auto}
+    .sp-badge[data-variant="popular"]::after{content:"";width:9px;height:9px;border-radius:50%;
+      background:#1113;box-shadow:0 0 0 6px rgba(231,205,140,.28);animation:spPulse 2.2s infinite}
+    @keyframes spPulse{0%{box-shadow:0 0 0 4px rgba(231,205,140,.28)}70%{box-shadow:0 0 0 11px rgba(231,205,140,0)}100%{box-shadow:0 0 0 4px rgba(231,205,140,0)}}
+
+    /* titles + price */
+    .sp-title{margin:18px 0 6px}
+    .sp-title h3{margin:0;font-family:"Cinzel",serif;font-size:1.22rem;color:var(--soft)}
+    .sp-price{font-size:clamp(22px,2.6vw,28px);color:#f5e6b9;font-weight:800;letter-spacing:.3px}
+    .sp-sub{color:var(--mut);font-size:.98rem;margin:6px 0 14px}
+
+    /* list */
+    .sp-list{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:11px}
+    .sp-li{display:grid;grid-template-columns:20px 1fr;align-items:start;gap:10px;color:#e9e9e9}
+    .sp-check{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;
+      border:1px solid var(--gold)}
+    .sp-check svg{width:12px;height:12px;fill:var(--gold)}
+
+    /* CTA */
+    .sp-cta{display:inline-block;margin-top:4px;padding:.72rem 1.05rem;border-radius:999px;border:1px solid var(--gold);
+      background:linear-gradient(180deg,var(--soft),var(--gold));color:#111;font-weight:800;text-decoration:none}
+    .sp-cta:focus-visible{outline:3px solid rgba(231,205,140,.45);outline-offset:3px}
+    .sp-muted{margin-top:10px;color:#a6a6a6;font-size:.86rem}
+
+    /* divider */
+    .sp-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(231,205,140,.22),transparent);margin:28px 0}
+  </style>
+
+  <div class="sp-container">
+    <span class="sp-eyebrow">Shopify</span>
+    <h2 id="spHeading" class="sp-heading">Shopify Store Setup Packages</h2>
+    <p class="sp-note">Best when you want Shopify’s hosted platform, app ecosystem, and built-in checkout.
+      <strong>Shopify subscription, paid themes & apps are billed by Shopify (extra).</strong>
+    </p>
+
+    <div class="sp-grid">
+
+      <!-- BASIC -->
+      <article class="sp-card" aria-label="Shopify Basic Setup">
+        <span class="sp-badge">Starter</span>
+        <div class="sp-title"><h3>Shopify Basic Setup</h3></div>
+        <div class="sp-price">₹6,999</div>
+        <div class="sp-sub">Launch-ready store (foundation done right)</div>
+
+        <ul class="sp-list">
+          <li class="sp-li"><span class="sp-check" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Account & store setup (client pays Shopify plan)</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Theme selection & install (free/purchased)</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Up to <strong>20 products</strong> + basic collections</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Policies, navigation, contact form</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Payment gateway (Razorpay / Stripe / PayPal)</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>WhatsApp chat button & SSL</li>
+        </ul>
+
+        <a class="sp-cta" href="#contact">Start Basic</a>
+        <p class="sp-muted">Timeline: ~1 week • Revisions: 1–2 small rounds</p>
+      </article>
+
+      <!-- ADVANCED (Most Popular) -->
+      <article class="sp-card sp-popular" aria-label="Shopify Advanced Build">
+        <span class="sp-badge" data-variant="popular">Most Popular</span>
+        <div class="sp-title"><h3>Shopify Advanced Build</h3></div>
+        <div class="sp-price">₹14,999–₹24,999</div>
+        <div class="sp-sub">Deeper customization & growth features</div>
+
+        <ul class="sp-list">
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>All of Basic + theme layout & section tweaks</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span><strong>30–100 products</strong> (bulk CSV if needed)</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Variants, coupons, tax & shipping setup</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Apps: reviews, upsells, abandoned cart</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Blog + basic SEO & analytics</li>
+        </ul>
+
+        <a class="sp-cta" href="#contact">Get Advanced</a>
+        <p class="sp-muted">Timeline: ~2–3 weeks • Revisions: up to 2 rounds</p>
+      </article>
+
+      <!-- ENTERPRISE -->
+      <article class="sp-card" aria-label="Shopify Enterprise / Custom">
+        <span class="sp-badge">Enterprise</span>
+        <div class="sp-title"><h3>Shopify Enterprise / Custom</h3></div>
+        <div class="sp-price">₹25,000+</div>
+        <div class="sp-sub">Scale features, custom sections & integrations</div>
+
+        <ul class="sp-list">
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Everything in Advanced + bespoke theme sections</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Multi-currency / multi-language (where supported)</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Subscriptions, wholesale (B2B), custom pricing</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>API integrations (ERP/CRM) & staff training</li>
+          <li class="sp-li"><span class="sp-check"><svg viewBox="0 0 16 16"><path d="M6.5 10.6 3.8 8l-1.3 1.3 4 4 7-7-1.3-1.3z"/></svg></span>Performance tuning & launch support</li>
+        </ul>
+
+        <a class="sp-cta" href="#contact">Request Custom Quote</a>
+        <p class="sp-muted">Timeline: 3–6+ weeks • Scope & pricing based on needs</p>
+      </article>
+
+    </div>
+
+    <div class="sp-divider" role="presentation"></div>
+    <p class="sp-muted"><strong>Notes:</strong> Shopify plan fees, premium themes, and paid apps are billed directly by Shopify.
+      Our fees cover setup, design, integrations, and launch support.
+    </p>
+  </div>
+</section>
+<!-- ================ / SHOPIFY PACKAGES (Optimized) ================ -->
+
+
+  <!-- Additional Services Section -->
+<section id="services" style="padding:80px 20px;max-width:1200px;margin:auto;">
+  <h2 style="text-align:center;font-family:'Cinzel',serif;color:#E4C988;margin-bottom:40px;">
+    Additional Services
+  </h2>
+  
+  <div class="services-grid">
+    <div class="service-card">
+      <h3>Copywriting</h3>
+      <p>Engaging website copy, product descriptions & ad content that convert.</p>
+    </div>
+    <div class="service-card">
+      <h3>SEO</h3>
+      <p>On-page & technical SEO setup with keyword research to rank higher.</p>
+    </div>
+    <div class="service-card">
+      <h3>CRM / Automations</h3>
+      <p>Customer management systems & automation for leads, emails & sales.</p>
+    </div>
+    <div class="service-card">
+      <h3>Email Marketing</h3>
+      <p>Newsletter setup, campaigns & automation for brand engagement.</p>
+    </div>
+    <div class="service-card">
+      <h3>Shopify Migration</h3>
+      <p>Seamless transfer of your store to Shopify with minimal downtime.</p>
+    </div>
+    <div class="service-card">
+      <h3>Maintenance</h3>
+      <p>Ongoing updates, security, backups & small edits to keep your site smooth.</p>
+    </div>
+    <div class="service-card">
+      <h3>Motion Graphics</h3>
+      <p>Animated visuals & video snippets to boost storytelling & ads.</p>
+    </div>
+    <div class="service-card">
+      <h3>Product Photos</h3>
+      <p>Professional editing & optimization of product images for web & ads.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap:20px;
+  }
+  .service-card {
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(199,161,90,0.3);
+    border-radius:14px;
+    padding:20px;
+    color:#EDEDED;
+    text-align:left;
+    transition:all 0.3s ease;
+  }
+  .service-card h3 {
+    font-family:"Cinzel", serif;
+    color:#E4C988;
+    margin-bottom:10px;
+  }
+  .service-card p {
+    font-size:14px;
+    color:#B9B9B9;
+    line-height:1.5em;
+  }
+  .service-card:hover {
+    transform:translateY(-6px);
+    background:rgba(199,161,90,0.08);
+    box-shadow:0 10px 25px rgba(199,161,90,0.2);
+    border-color:#E4C988;
+  }
+</style>
+
+<!-- ===== Portfolio / Business Websites Section ===== -->
+<section id="portfolio-packages">
+  <h2 class="section-title">🌐 Portfolio & Business Websites</h2>
+  <p class="section-sub">Elegant sites for professionals, creators, and startups</p>
+  
+  <div class="portfolio-grid">
+    
+    <!-- Portfolio Website -->
+    <div class="pkg-card">
+      <h3 class="pkg-title">Portfolio Website</h3>
+      <div class="pkg-price">₹2,999 – ₹4,999</div>
+      <ul class="pkg-list">
+        <li>4–6 pages (Home, About, Work, Contact)</li>
+        <li>Responsive cinematic layout</li>
+        <li>Project gallery / case studies</li>
+        <li>Contact form integration</li>
+        <li>SEO-ready structure</li>
+      </ul>
+      <p class="pkg-note">Add-ons: Blog (+₹999), Domain Setup (+₹499)</p>
+      <a href="#contact" class="cta-mini">Get Quote</a>
+    </div>
+    
+    <!-- Business Website -->
+    <div class="pkg-card">
+      <h3 class="pkg-title">Business Website</h3>
+      <div class="pkg-price">₹4,999 – ₹7,999</div>
+      <ul class="pkg-list">
+        <li>5–8 pages (Home, Services, About, Team, Blog, Contact)</li>
+        <li>CMS so you can edit content easily</li>
+        <li>Google Analytics + SEO setup</li>
+        <li>Email/Lead capture forms</li>
+        <li>Optional Careers page</li>
+      </ul>
+      <p class="pkg-note">Add-ons: Chatbot (+₹999), CRM Automations</p>
+      <a href="#contact" class="cta-mini">Get Quote</a>
+    </div>
+    
+    <!-- Premium Website -->
+    <div class="pkg-card">
+      <h3 class="pkg-title">Premium Website</h3>
+      <div class="pkg-price">₹9,999+</div>
+      <ul class="pkg-list">
+        <li>Custom UI/UX design</li>
+        <li>Advanced animations / cinematic sections</li>
+        <li>Multi-language or multi-region setup</li>
+        <li>Performance optimization</li>
+        <li>Custom CMS/dashboard integrations</li>
+      </ul>
+      <p class="pkg-note">Best for funded startups or agencies</p>
+      <a href="#contact" class="cta-mini">Discuss Project</a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* ===== Portfolio Packages Styles ===== */
+#portfolio-packages{padding:80px 20px;background:#0B0B0D}
+#portfolio-packages .section-title{
+  text-align:center;
+  font-family:"Cinzel",serif;
+  font-size:28px;
+  color:var(--soft-gold);
+  margin-bottom:10px;
+}
+#portfolio-packages .section-sub{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:40px;
+}
+.portfolio-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:28px;
+  max-width:1100px;
+  margin:0 auto;
+}
+.pkg-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(231,205,140,.25);
+  border-radius:16px;
+  padding:28px;
+  transition:.3s;
+}
+.pkg-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 12px 32px rgba(231,205,140,.25);
+}
+.pkg-title{
+  font-family:"Cinzel",serif;
+  font-size:20px;
+  margin:0 0 8px;
+  color:var(--soft-gold);
+}
+.pkg-price{
+  font-size:16px;
+  font-weight:600;
+  color:#fff;
+  margin-bottom:14px;
+}
+.pkg-list{
+  list-style:none;
+  padding:0;
+  margin:0 0 16px;
+  color:var(--muted);
+  font-size:14.5px;
+}
+.pkg-list li{margin-bottom:6px}
+.pkg-note{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+</style>
+
+<!-- ======================= PROCESS (ZIG-ZAG RAIL) ======================= -->
+<section id="process" class="proc-wrap">
+  <div class="container">
+    <h2 class="proc-title">Process</h2>
+
+    <div class="rail" aria-hidden="true"></div>
+
+    <ol class="steps">
+      <!-- 01 -->
+      <li class="step">
+        <span class="pin" aria-hidden="true">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="13"/></svg>
+          <span class="num">01</span>
+        </span>
+        <article class="card">
+          <header>
+            <h3>Discover</h3>
+            <span class="pill">~1–2 days</span>
+          </header>
+          <p>We align on goals, users, and outcomes to set a clear project vision.</p>
+        </article>
+      </li>
+
+      <!-- 02 -->
+      <li class="step">
+        <span class="pin" aria-hidden="true">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="13"/></svg>
+          <span class="num">02</span>
+        </span>
+        <article class="card">
+          <header>
+            <h3>Design</h3>
+            <span class="pill">~3–5 days</span>
+          </header>
+          <p>Cinematic visuals, refined UX, and elegant flows crafted with precision.</p>
+        </article>
+      </li>
+
+      <!-- 03 -->
+      <li class="step">
+        <span class="pin" aria-hidden="true">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="13"/></svg>
+          <span class="num">03</span>
+        </span>
+        <article class="card">
+          <header>
+            <h3>Develop</h3>
+            <span class="pill">~1–2 weeks</span>
+          </header>
+          <p>Responsive, SEO-friendly builds powered by clean code and smooth performance.</p>
+        </article>
+      </li>
+
+      <!-- 04 -->
+      <li class="step">
+        <span class="pin" aria-hidden="true">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="13"/></svg>
+          <span class="num">04</span>
+        </span>
+        <article class="card">
+          <header>
+            <h3>Launch</h3>
+            <span class="pill">1 day</span>
+          </header>
+          <p>Seamless deployment with SSL, analytics, and scale-ready infrastructure.</p>
+        </article>
+      </li>
+
+      <!-- 05 -->
+      <li class="step">
+        <span class="pin" aria-hidden="true">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="13"/></svg>
+          <span class="num">05</span>
+        </span>
+        <article class="card">
+          <header>
+            <h3>Support</h3>
+            <span class="pill">ongoing</span>
+          </header>
+          <p>Continuous updates, security, and optimizations to keep your business thriving.</p>
+        </article>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<style>
+/* ===== Theme tokens (match your site) ===== */
+:root{
+  --bg:#0B0B0D;
+  --ink:#EDEDED;
+  --muted:#B9B9B9;
+  --gold:#C7A15A;
+  --soft:#E4C988;
+  --glass: rgba(255,255,255,.04);
+  --border: rgba(231,205,140,.18);
+}
+
+/* ===== Layout ===== */
+.proc-wrap{position:relative;padding:80px 0;background:transparent}
+.proc-title{
+  font-family:"Cinzel",serif; color:#F7F5EF; text-align:left;
+  font-size:clamp(28px,4.6vw,48px); margin:0 0 24px
+}
+.proc-wrap .container{max-width:min(1120px,92vw);margin:0 auto;position:relative}
+
+/* center vertical rail */
+.rail{
+  position:absolute; left:50%; top:120px; bottom:40px; width:2px;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,rgba(231,205,140,.1),rgba(231,205,140,.4),rgba(231,205,140,.1));
+  filter:drop-shadow(0 0 10px rgba(199,161,90,.15));
+  border-radius:2px;
+}
+
+/* Steps list */
+.steps{list-style:none;margin:0;padding:16px 0;display:grid;gap:38px}
+.step{position:relative;min-height:120px}
+
+/* Alternating layout */
+.step:nth-child(odd) .card{margin-right:56%; }
+.step:nth-child(even) .card{margin-left:56%; }
+
+/* Pin (gold node) */
+.pin{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:60px;height:60px;
+  display:grid;place-items:center;
+}
+.pin svg circle{
+  fill:rgba(231,205,140,.15);
+  stroke:var(--gold); stroke-width:2;
+  filter:drop-shadow(0 0 10px rgba(199,161,90,.3));
+}
+.pin .num{
+  position:absolute; inset:0; display:grid; place-items:center;
+  font-weight:800; letter-spacing:.06em; font-size:12px; color:var(--soft);
+}
+
+/* Card */
+.card{
+  position:relative; border:1px solid var(--border);
+  background:linear-gradient(180deg, var(--glass), rgba(255,255,255,.02));
+  backdrop-filter:saturate(140%) blur(6px);
+  color:var(--ink); padding:18px 18px 16px; border-radius:16px;
+  box-shadow:0 14px 40px rgba(0,0,0,.22), 0 10px 28px rgba(199,161,90,.07);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s;
+}
+.card header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.card h3{margin:0;color:var(--soft);font-size:20px;letter-spacing:.4px}
+.card p{margin:0;color:var(--muted);line-height:1.6}
+
+.pill{
+  border:1px solid rgba(231,205,140,.35);
+  color:var(--soft); font-size:12px; padding:.18rem .5rem; border-radius:999px;
+  background:rgba(231,205,140,.08)
+}
+
+/* Hover/active */
+.step:hover .card{
+  transform:translateY(-4px);
+  border-color:rgba(231,205,140,.35);
+  box-shadow:0 18px 50px rgba(199,161,90,.15), 0 12px 34px rgba(0,0,0,.38);
+}
+
+/* Reveal (on-scroll) */
+.step{opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease}
+.step.in{opacity:1; transform:translateY(0)}
+.step:nth-child(odd).in{transition-delay:.05s}
+.step:nth-child(even).in{transition-delay:.12s}
+
+/* Mobile stack */
+@media (max-width:820px){
+  .rail{display:none}
+  .pin{left:0; transform:translate(0,-50%)}
+  .pin svg{width:44px;height:44px}
+  .steps{gap:22px}
+  .step:nth-child(odd) .card,
+  .step:nth-child(even) .card{margin:0 0 0 56px}
+  .card{padding:16px}
+  .card h3{font-size:18px}
+}
+</style>
+
+<script>
+/* simple on-scroll reveal */
+(function(){
+  const io = new IntersectionObserver((ents)=>{
+    ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+  },{threshold:.25});
+  document.querySelectorAll('#process .step').forEach(s=>io.observe(s));
+})();
+</script>
+<!-- ======================= BRANDS WE'VE WORKED WITH ======================= -->
+<section id="brands" class="brands-wrap">
+  <div class="container">
+    <h2 class="brands-title">Brands we’ve worked with</h2>
+
+    <div class="logo-slider" aria-label="Client brands">
+      <!-- soft edge masks -->
+      <span class="fade left" aria-hidden="true"></span>
+      <span class="fade right" aria-hidden="true"></span>
+
+      <!-- Track 1 -->
+      <div class="track">
+        <a class="brand" href="#" aria-label="Lj’s Wrappings">Lj’s Wrappings</a>
+        <a class="brand" href="#" aria-label="Lj Foods">Lj Foods</a>
+        <a class="brand" href="#" aria-label="Anderhaut">Anderhaut</a>
+        <a class="brand" href="#" aria-label="Mountainhaute">Mountainhaute</a>
+        <a class="brand" href="#" aria-label="Boldmour">Boldmour</a>
+      </div>
+
+      <!-- Track 2 (duplicated for seamless loop) -->
+      <div class="track" aria-hidden="true">
+        <a class="brand" href="#">Lj’s Wrappings</a>
+        <a class="brand" href="#">Lj Foods</a>
+        <a class="brand" href="#">Anderhaut</a>
+        <a class="brand" href="#">Mountainhaute</a>
+        <a class="brand" href="#">Boldmour</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+:root{
+  --gold:#C7A15A; --soft:#E4C988; --warm:#F7F5EF; --ink:#EDEDED; --muted:#B9B9B9; --matte:#0B0B0D;
+  --glass: rgba(255,255,255,.04); --border: rgba(231,205,140,.20);
+}
+
+.brands-wrap{padding:60px 0; background:transparent;}
+.brands-wrap .container{max-width:min(1200px,92vw); margin:0 auto;}
+.brands-title{
+  font-family:"Cinzel",serif; color:var(--warm);
+  font-size:clamp(26px,4.2vw,42px); margin:0 0 18px;
+}
+
+.logo-slider{
+  position:relative; overflow:hidden; border-radius:18px;
+  border:1px solid rgba(231,205,140,.14);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));
+  padding:18px 0;
+}
+
+/* soft vignette edges */
+.logo-slider .fade{
+  position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none;
+  background:linear-gradient(to right, rgba(11,11,13,1), rgba(11,11,13,0));
+}
+.logo-slider .fade.right{right:0; transform:scaleX(-1);}
+.logo-slider .fade.left{left:0;}
+
+/* scrolling tracks */
+.logo-slider .track{
+  display:flex; gap:28px; align-items:center; white-space:nowrap;
+  animation:brand-scroll 28s linear infinite;
+  will-change:transform;
+  padding:0 24px;
+}
+.logo-slider:hover .track{animation-play-state:paused;}
+@keyframes brand-scroll{
+  to{ transform: translateX(-50%); }
+}
+
+/* brand wordmarks (swap with real logos later) */
+.brand{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:48px; padding:0 22px; border-radius:12px; text-decoration:none;
+  font-weight:700; letter-spacing:.3px; color:var(--ink);
+  background:var(--glass); border:1px solid var(--border);
+  box-shadow:0 8px 26px rgba(0,0,0,.22), 0 2px 0 rgba(231,205,140,.16) inset;
+  transition:transform .25s ease, box-shadow .25s ease, color .25s ease, border-color .25s ease;
+}
+.brand:hover{
+  transform:translateY(-2px);
+  border-color:rgba(231,205,140,.35);
+  color:var(--soft);
+  box-shadow:0 12px 34px rgba(199,161,90,.12), 0 2px 0 rgba(231,205,140,.24) inset;
+}
+
+/* Optional: if you swap text for <img>, keep them neat */
+.brand img{
+  height:26px; width:auto; display:block; filter:grayscale(1) contrast(1.05) opacity(.85);
+  transition:filter .25s ease, transform .25s ease;
+}
+.brand:hover img{filter:none; transform:translateY(-1px);}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion:reduce){
+  .logo-slider .track{animation:none}
+}
+
+/* Mobile tweaks */
+@media (max-width:700px){
+  .brand{height:44px; padding:0 16px; font-size:14px}
+  .logo-slider .track{gap:18px}
+  .logo-slider .fade{width:50px}
+}
+</style>
+
+<script>
+/* Ensure the two tracks together are wide enough for a seamless wrap on any viewport */
+(function(){
+  const slider = document.querySelector('#brands .logo-slider');
+  if(!slider) return;
+  const tracks = slider.querySelectorAll('.track');
+  // if the combined width is still smaller than the slider, duplicate items
+  const ensureFill = () => {
+    tracks.forEach(track=>{
+      const total = Array.from(track.children).reduce((w,el)=>w+el.getBoundingClientRect().width+28,0);
+      if(total < slider.clientWidth*1.2){
+        // clone the children once
+        Array.from(track.children).forEach(node=>track.appendChild(node.cloneNode(true)));
+      }
+    });
+  };
+  ensureFill();
+  window.addEventListener('resize', ensureFill, {passive:true});
+})();
+</script>
+
+  </section>
+<!-- ======================= FAQ (enhanced) ======================= -->
+<section id="faq" class="faq-wrap">
+  <div class="faq-container">
+    <header class="faq-head">
+      <h2 class="faq-title">FAQ</h2>
+      <p class="faq-sub">Quick answers about timelines, revisions, ownership, and more.</p>
+      <div class="faq-search">
+        <input id="faqSearch" type="search" placeholder="Search questions…" aria-label="Search FAQ">
+      </div>
+    </header>
+
+    <div class="faq-grid" role="list">
+      <!-- Item -->
+      <article class="faq-card" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="faq-1" id="faq-btn-1">
+          <span class="q">Timelines?</span>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="faq-panel" id="faq-1" role="region" aria-labelledby="faq-btn-1">
+          <p><strong>T0</strong> in 24–48 hrs, <strong>T1</strong> in ~2–3 days, <strong>T2</strong> in ~1–2 weeks, and <strong>T3</strong> in ~2–4 weeks — after content is shared and scope is locked.</p>
+        </div>
+      </article>
+
+      <article class="faq-card" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="faq-2" id="faq-btn-2">
+          <span class="q">Revisions?</span>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="faq-panel" id="faq-2" role="region" aria-labelledby="faq-btn-2">
+          <p>Two structured rounds per phase. Small text/image swaps are fine post-launch during support.</p>
+        </div>
+      </article>
+
+      <article class="faq-card" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="faq-3" id="faq-btn-3">
+          <span class="q">Ownership?</span>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="faq-panel" id="faq-3" role="region" aria-labelledby="faq-btn-3">
+          <p>You own final code, assets, and domains. 3rd-party licenses (Shopify themes/apps, fonts) are billed directly to you.</p>
+        </div>
+      </article>
+
+      <article class="faq-card" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="faq-4" id="faq-btn-4">
+          <span class="q">Support?</span>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="faq-panel" id="faq-4" role="region" aria-labelledby="faq-btn-4">
+          <p>30-day launch support is included. Ongoing care plan available (updates, security, small changes) at ₹699/mo.</p>
+        </div>
+      </article>
+
+      <article class="faq-card" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="faq-5" id="faq-btn-5">
+          <span class="q">Content?</span>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="faq-panel" id="faq-5" role="region" aria-labelledby="faq-btn-5">
+          <p>You can provide copy/photos or we can add them as <em>add-ons</em> (copywriting, product photos, motion graphics).</p>
+        </div>
+      </article>
+
+      <article class="faq-card" role="listitem">
+        <button class="faq-btn" aria-expanded="false" aria-controls="faq-6" id="faq-btn-6">
+          <span class="q">Payments?</span>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="faq-panel" id="faq-6" role="region" aria-labelledby="faq-btn-6">
+          <p>T0/T1: upfront. T2/T3: 50% advance, 50% pre-launch. Razorpay/UPI/Bank Transfer available.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+:root{
+  --gold:#C7A15A; --soft:#E4C988; --warm:#F7F5EF; --muted:#B9B9B9; --ink:#EDEDED; --matte:#0B0B0D;
+  --glass:rgba(255,255,255,.04); --border:rgba(231,205,140,.18); --border-strong:rgba(231,205,140,.32);
+}
+
+.faq-wrap{padding:64px 0}
+.faq-container{max-width:min(1100px,92vw); margin:0 auto}
+.faq-title{
+  font-family:"Cinzel",serif; color:var(--warm);
+  font-size:clamp(28px,4vw,48px); line-height:1.1; margin:0 0 6px;
+}
+.faq-sub{color:var(--muted); margin:0 0 18px}
+.faq-search{margin:12px 0 26px}
+.faq-search input{
+  width:100%; padding:12px 14px; border-radius:12px; outline:none;
+  background:rgba(255,255,255,.03); color:var(--ink);
+  border:1px solid var(--border); transition:border-color .25s ease, box-shadow .25s ease;
+}
+.faq-search input:focus{border-color:var(--gold); box-shadow:0 0 0 3px rgba(231,205,140,.18)}
+
+.faq-grid{
+  display:grid; gap:14px;
+  grid-template-columns:1fr; 
+}
+@media(min-width:860px){
+  .faq-grid{grid-template-columns:1fr 1fr}
+}
+
+.faq-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.02));
+  border:1px solid var(--border); border-radius:14px; overflow:hidden;
+  transition:box-shadow .25s ease, border-color .25s ease, transform .25s ease;
+}
+.faq-card:hover{
+  border-color:var(--border-strong);
+  box-shadow:0 16px 40px rgba(199,161,90,.10);
+  transform:translateY(-2px);
+}
+
+.faq-btn{
+  width:100%; display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:16px 16px; background:transparent; color:var(--ink);
+  font-weight:700; letter-spacing:.2px; border:0; cursor:pointer; text-align:left;
+}
+.faq-btn .q{flex:1}
+.faq-btn .chev{color:var(--soft); transition:transform .25s ease, color .25s ease}
+.faq-btn[aria-expanded="true"] .chev{transform:rotate(180deg); color:var(--gold)}
+
+.faq-panel{
+  grid-column:1/-1; padding:0 16px 0; color:var(--muted);
+  max-height:0; overflow:hidden;
+  transition:max-height .35s ease, padding-bottom .25s ease;
+}
+.faq-panel p{margin:0; padding:0 0 14px; line-height:1.55}
+.faq-btn[aria-expanded="true"] + .faq-panel{max-height:220px; padding-bottom:10px}
+</style>
+
+<script>
+(function(){
+  const ONE_OPEN = true; // set to false if you want multiple open
+
+  const cards = document.querySelectorAll('.faq-card');
+  const btns  = document.querySelectorAll('.faq-btn');
+  const search = document.getElementById('faqSearch');
+
+  const closeAll = () => btns.forEach(b => b.setAttribute('aria-expanded','false'));
+
+  btns.forEach(btn=>{
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      if (ONE_OPEN) closeAll();
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+    // keyboard: space/enter
+    btn.addEventListener('keydown', (e)=>{
+      if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); btn.click(); }
+    });
+  });
+
+  // Filter
+  const filter = term => {
+    const q = (term||'').toLowerCase();
+    cards.forEach(card=>{
+      const txt = card.innerText.toLowerCase();
+      card.style.display = txt.includes(q) ? '' : 'none';
+    });
+  };
+  search?.addEventListener('input', e => filter(e.target.value));
+
+  // Optional: open from hash e.g. #faq-3
+  if(location.hash){
+    const panel = document.querySelector(location.hash);
+    const trigger = panel?.previousElementSibling;
+    if(trigger?.classList.contains('faq-btn')){
+      if (ONE_OPEN) closeAll();
+      trigger.setAttribute('aria-expanded','true');
+      panel.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  }
+})();
+</script>
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Get in touch</h2>
+
+      <div class="shell">
+        <div class="contact-grid">
+          <div class="intro">
+            <small>We're here to help you</small>
+            <h3>Discuss Your Chemical-grade<br/>Solution Needs</h3>
+            <p>Looking for top-quality builds tailored to your needs? Reach out to us — we’ll get you a solution fast.</p>
+            <div class="info">
+              <a href="mailto:dmtodotcom@gmail.com" title="Email">
+                <span class="chip" aria-hidden="true">✉️</span>
+                <span>
+                  <div class="muted" style="font-size:12px">E-mail</div>
+                  dmtodotcom@gmail.com
+                </span>
+              </a>
+              <a href="tel:+919444384637" title="Phone">
+                <span class="chip" aria-hidden="true">📞</span>
+                <span>
+                  <div class="muted" style="font-size:12px">Phone number</div>
+                  +91&nbsp;94443&nbsp;84637
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div class="card" role="form" style="background:rgba(255,255,255,.03);border:1px solid rgba(231,205,140,.25);border-radius:18px;box-shadow:0 18px 60px rgba(231,205,140,.12);padding:22px 22px 26px">
+            <form id="contactForm" action="https://formspree.io/f/xanpodwv" method="POST">
+              <input type="hidden" name="_subject" value="New Inquiry — dm to dot com">
+              <input type="hidden" name="_redirect" value="https://yourdomain.com/thank-you.html">
+              <div class="full">
+                <label for="name">Name</label>
+                <input id="name" name="name" placeholder="Jane Smith" required>
+              </div>
+              <div class="full">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@email.com" required>
+              </div>
+              <div>
+                <label for="industry">Industry</label>
+                <select id="industry" name="industry">
+                  <option value="">Select…</option>
+                  <option>Retail & E-commerce</option>
+                  <option>Education</option>
+                  <option>Healthcare</option>
+                  <option>Food & Beverage</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="full">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell us a bit about your project…"></textarea>
+              </div>
+              <div class="full" style="display:flex;justify-content:flex-end">
+                <button class="cta" id="sendBtn" type="submit">Get a Solution</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="wa-float" href="https://wa.me/919444384637" target="_blank" rel="noopener">WhatsApp</a>
+
+  <!-- Chatbot trigger & panel -->
+  <button class="chat-toggle" id="chatToggle" aria-expanded="false" aria-controls="chatPanel">Chat</button>
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-label="Assistant chat">
+    <div class="chat-header">
+      <div class="title">💬 <span>dm to dot — Assistant</span></div>
+      <button id="chatClose" class="cta" style="padding:.35rem .7rem">Close</button>
+    </div>
+    <div class="chat-body" id="chatMsgs">
+      <div class="bubble">Hi! I can help with packages, timelines, or a quick quote. Ask me anything or try a quick option below.</div>
+      <div class="quick-row">
+        <span class="chip-quick" data-q="What are your packages?">Packages</span>
+        <span class="chip-quick" data-q="How long does a project take?">Timeline</span>
+        <span class="chip-quick" data-q="How much does it cost?">Pricing</span>
+        <span class="chip-quick" data-q="Can I talk to a human?">Talk to human</span>
+      </div>
+    </div>
+    <form class="chat-input" id="chatForm" autocomplete="off">
+      <input id="chatField" placeholder="Type your message…" aria-label="Message"/>
+      <button class="cta" type="submit" style="padding:.55rem .9rem">Send</button>
+    </form>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="container" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center">
+      <span>© <span id="year"></span> dm to dot com</span>
+      <a href="https://wa.me/919444384637" target="_blank" rel="noopener" class="cta" style="background:transparent;color:var(--soft-gold);border-color:var(--gold)">WhatsApp</a>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const underline = document.getElementById('underline');
+    const links = [...document.querySelectorAll('.nav-left .navlink')];
+    const hamburger = document.getElementById('hamburger');
+    const overlay = document.getElementById('mobileOverlay');
+    const year = document.getElementById('year');
+    const progress = document.getElementById('progress');
+    const cursorGlow = document.getElementById('cursorGlow');
+    const hero = document.getElementById('hero');
+    year.textContent = new Date().getFullYear();
+
+    const onScroll = () => {
+      const h = document.documentElement;
+      const sc = h.scrollTop; const max = h.scrollHeight - h.clientHeight;
+      progress.style.width = (sc / max) * 100 + '%';
+    };
+    document.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    const isTouch = matchMedia('(pointer: coarse)').matches;
+    if(!isTouch){
+      document.addEventListener('pointermove', (e)=>{
+        cursorGlow.style.left = e.clientX + 'px';
+        cursorGlow.style.top  = e.clientY + 'px';
+      }, {passive:true});
+    } else {
+      cursorGlow.style.display = 'none';
+    }
+
+    const toggleOverlay = (show) => { 
+      overlay.style.display = show ? 'block' : 'none'; 
+      document.documentElement.style.overflow = show ? 'hidden' : ''; 
+      hamburger.setAttribute('aria-expanded', String(!!show));
+    };
+    hamburger?.addEventListener('click', () => toggleOverlay(true));
+    overlay?.addEventListener('click', (e)=>{ if(e.target === overlay){ toggleOverlay(false);} });
+    overlay?.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>toggleOverlay(false)));
+
+    function moveUnderline(target){
+      const rect = target.getBoundingClientRect();
+      const wrap = target.closest('.nav-wrap').getBoundingClientRect();
+      underline.style.width = rect.width + 'px';
+      underline.style.transform = `translateX(${rect.left - wrap.left}px)`;
+    }
+    links.forEach(a=>{
+      a.addEventListener('mouseenter',()=>moveUnderline(a));
+      a.addEventListener('focus',()=>moveUnderline(a));
+      a.addEventListener('click',()=>{
+        links.forEach(l=>l.removeAttribute('aria-current'));
+        a.setAttribute('aria-current','page');
+        moveUnderline(a);
+      });
+    });
+    if(links[0]) moveUnderline(links[0]);
+
+    const sections = ['#hero','#services','#add-services','#packages','#process','#work'];
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          const id = '#' + en.target.id;
+          const link = links.find(l=>l.getAttribute('href')===id);
+          if(link){ links.forEach(l=>l.removeAttribute('aria-current')); link.setAttribute('aria-current','page'); moveUnderline(link); }
+        }
+      });
+    },{threshold:.5});
+    sections.forEach(sel=>{ const el=document.querySelector(sel); if(el) obs.observe(el); });
+
+    if(!prefersReduced && window.gsap){
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.to('#logo',{scale:0.8,ease:'power2.out',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.to('.nav-inner',{height:'var(--nav-h-shrink)',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.utils.toArray('.card-min, .big-tile, .pkg, .band, .work-card').forEach((el,i)=>{
+        gsap.from(el,{y:24,opacity:0,duration:.6,delay:i*0.03,scrollTrigger:{trigger:el,start:'top 85%'}});
+      });
+      const words = gsap.utils.toArray('.hero-title .word');
+      gsap.from(words,{y:40,opacity:0,duration:.9,ease:'power3.out',stagger:0.12,delay:.2});
+      if(words.length){
+        words.forEach((w)=>{
+          w.addEventListener('mouseenter',()=>{
+            if(prefersReduced) return;
+            gsap.to(w,{y:-6, scale:1.06, duration:.35, ease:'power3.out', textShadow:'0 12px 28px rgba(231,205,140,.25)'});
+          });
+          w.addEventListener('mouseleave',()=>{
+            gsap.to(w,{y:0, scale:1, duration:.4, ease:'power3.out', textShadow:'0 0 0 rgba(0,0,0,0)'});
+          });
+        });
+        if(!isTouch){
+          hero.addEventListener('pointermove',(e)=>{
+            const r = hero.getBoundingClientRect();
+            const xp = (e.clientX - r.left)/r.width - .5;
+            const yp = (e.clientY - r.top)/r.height - .5;
+            gsap.to('.hero-copy',{x:xp*10, y:yp*12, duration:.5, ease:'power3.out'});
+          });
+          hero.addEventListener('pointerleave',()=> gsap.to('.hero-copy',{x:0,y:0,duration:.6,ease:'power3.out'}));
+        }
+      }
+    }
+
+    // Particles
+    const wrap = document.getElementById('particles');
+    const N = 48;
+    for(let i=0;i<N;i++){
+      const d=document.createElement('span'); d.className='dot';
+      d.style.left=Math.random()*100+'%'; d.style.top=Math.random()*100+'%';
+      wrap.appendChild(d);
+      const dur = 6000 + Math.random()*6000;
+      const dx = (Math.random()*2-1)*30; const dy = (Math.random()*2-1)*20;
+      d.animate([{transform:'translate(0,0)'},{transform:`translate(${dx}px,${dy}px)`},{transform:'translate(0,0)'}],{duration:dur,iterations:Infinity});
+    }
+
+    // --- Packages carousel interactions ---
+    const carousel = document.getElementById('carousel');
+    if (carousel) {
+      carousel.setAttribute('role','listbox');
+      carousel.querySelectorAll('.pkg').forEach(el => el.setAttribute('role','option'));
+    }
+    carousel?.querySelectorAll('.pkg').forEach((card) => {
+      card.addEventListener('pointerdown', () => {
+        card.setAttribute('tabindex', '0');
+        card.focus({ preventScroll: true });
+      });
+      card.addEventListener('mouseenter', () => {
+        if (window.matchMedia('(hover:hover)').matches) {
+          let sib = card.nextElementSibling; let i = 1;
+          while (sib) { sib.style.transform = `translateY(-20px) translateX(${i * 50}px)`; sib = sib.nextElementSibling; i++; }
+          card.style.transform = 'translateY(-20px) rotate3d(1,-1,0,6deg)'; card.style.zIndex = 2;
+        }
+      });
+      card.addEventListener('mouseleave', () => {
+        let sib = card.nextElementSibling; while (sib) { sib.style.transform = ''; sib = sib.nextElementSibling; }
+        card.style.transform = ''; card.style.zIndex = '';
+      });
+      card.querySelectorAll('.cta-mini').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const plan = btn.getAttribute('data-plan');
+          const select = document.getElementById('services');
+          const msg = document.getElementById('message');
+          if (msg) msg.value = `Interested in ${plan}. Please contact me.`;
+          if (select) select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+    });
+    carousel?.addEventListener('keydown', (e) => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
+      const cards = Array.from(carousel.querySelectorAll('.pkg')); if (!cards.length) return;
+      e.preventDefault();
+      const active = document.activeElement?.closest?.('.pkg') || null;
+      let idx = active ? cards.indexOf(active) : -1;
+      if (e.key === 'Home') idx = 0;
+      else if (e.key === 'End') idx = cards.length - 1;
+      else { const d = e.key === 'ArrowRight' ? 1 : -1; idx = idx === -1 ? (d>0?0:cards.length-1) : Math.max(0, Math.min(cards.length-1, idx+d)); }
+      const target = cards[idx]; if (!target) return;
+      cards.forEach(c => { c.setAttribute('tabindex','-1'); c.setAttribute('aria-selected','false'); });
+      target.setAttribute('tabindex','0'); target.setAttribute('aria-selected','true');
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+    });
+    (()=>{ const first = carousel?.querySelector('.pkg'); if(first && !first.hasAttribute('tabindex')){ first.setAttribute('tabindex','0'); first.setAttribute('aria-selected','true'); Array.from(carousel.querySelectorAll('.pkg:not(:first-child)')).forEach(c=>{c.setAttribute('tabindex','-1'); c.setAttribute('aria-selected','false');}); } })();
+    carousel?.addEventListener('wheel',(e)=>{ if(Math.abs(e.deltaX) < Math.abs(e.deltaY)){ carousel.scrollBy({ left:e.deltaY, behavior:'auto' }); e.preventDefault(); } },{passive:false});
+
+    // --- Chat mini widget ---
+    const chatToggle = document.getElementById('chatToggle');
+    const chatClose = document.getElementById('chatClose');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatForm = document.getElementById('chatForm');
+    const chatField = document.getElementById('chatField');
+    const chatMsgs = document.getElementById('chatMsgs');
+
+    const setChat = (open) => {
+      chatPanel.style.display = open ? 'flex' : 'none';
+      chatToggle.setAttribute('aria-expanded', String(!!open));
+      if (open) chatField?.focus();
+    };
+    chatToggle?.addEventListener('click', () => setChat(true));
+    chatClose?.addEventListener('click', () => setChat(false));
+    document.querySelectorAll('.chip-quick').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const q = chip.getAttribute('data-q') || '';
+        if (!q) return;
+        const you = document.createElement('div'); you.className = 'bubble you'; you.textContent = q;
+        chatMsgs.appendChild(you); chatMsgs.scrollTop = chatMsgs.scrollHeight;
+        sendToAssistant(q);
+      });
+    });
+
+    async function sendToAssistant(text) {
+      const bot = document.createElement('div'); bot.className = 'bubble'; bot.textContent = '…';
+      chatMsgs.appendChild(bot); chatMsgs.scrollTop = chatMsgs.scrollHeight;
+      try {
+        const r = await fetch('/api/chat',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ message:text }) });
+        const data = await r.json(); bot.textContent = data?.reply || 'Sorry, something went wrong.';
+      } catch(e) { bot.textContent = 'Network error. Please try again.'; }
+      chatMsgs.scrollTop = chatMsgs.scrollHeight;
+    }
+
+    chatForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const val = (chatField.value || '').trim(); if (!val) return;
+      const you = document.createElement('div'); you.className = 'bubble you'; you.textContent = val;
+      chatMsgs.appendChild(you); chatField.value = ''; chatMsgs.scrollTop = chatMsgs.scrollHeight;
+      await sendToAssistant(val);
+    });
+
+    // --- Contact form toast ---
+    const toast = document.getElementById('toast');
+    const contactForm = document.getElementById('contactForm');
+    contactForm?.addEventListener('submit', () => {
+      if (!toast) return;
+      toast.textContent = 'Submitting…'; toast.style.display = 'block';
+      setTimeout(() => { toast.textContent = 'Thanks! We’ll reach out soon.'; }, 1200);
+      setTimeout(() => { toast.style.display = 'none'; }, 4000);
+    });
+
+    // --- SHOWREEL autoscroll logic ---
+    const wrapReel = document.getElementById('reelWrap');
+    const track = document.getElementById('reelTrack');
+    if (wrapReel && track) {
+      // Duplicate items until track is > 2x container (for seamless wrap)
+      const baseClones = Array.from(track.children).map(n => n.cloneNode(true));
+      const fill = () => {
+        const needWidth = wrapReel.clientWidth * 2.2;
+        while (track.scrollWidth < needWidth) baseClones.forEach(n => track.appendChild(n.cloneNode(true)));
+      };
+      fill(); window.addEventListener('resize', fill);
+
+      let offset = 0;
+      let speed = 0.45; // px per frame (~27px/s at 60fps)
+      let playing = true;
+      let lastT = performance.now();
+
+      const tick = (t) => {
+        const dt = t - lastT; lastT = t;
+        if (playing) {
+          offset -= speed * (dt / (1000/60));
+          const total = track.scrollWidth / 2;
+          if (Math.abs(offset) >= total) offset %= total;
+          track.style.transform = `translateX(${offset}px)`;
+        }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+
+      // Pause on hover
+      wrapReel.addEventListener('mouseenter', () => playing = false);
+      wrapReel.addEventListener('mouseleave', () => playing = true);
+
+      // Drag / touch swipe
+      let dragging = false, startX = 0, startOff = 0;
+      const startDrag = (x) => { dragging = true; playing = false; startX = x; startOff = offset; };
+      const moveDrag  = (x) => { if (!dragging) return; offset = startOff + (x - startX); track.style.transform = `translateX(${offset}px)`; };
+      const endDrag   = () => { dragging = false; playing = true; };
+
+      wrapReel.addEventListener('pointerdown', e => { wrapReel.setPointerCapture(e.pointerId); startDrag(e.clientX); });
+      wrapReel.addEventListener('pointermove', e => moveDrag(e.clientX));
+      wrapReel.addEventListener('pointerup', endDrag);
+      wrapReel.addEventListener('pointercancel', endDrag);
+      wrapReel.addEventListener('contextmenu', e => dragging && e.preventDefault());
+
+      // Wheel to tweak speed
+      wrapReel.addEventListener('wheel', (e) => {
+        speed = Math.max(0.1, Math.min(2.2, speed + (e.deltaY > 0 ? 0.15 : -0.15)));
+      }, { passive: true });
+
+      // Pause when off-screen (perf)
+      const io = new IntersectionObserver((ents)=>{
+        ents.forEach(en => { playing = en.isIntersecting; });
+      },{threshold:0.1});
+      io.observe(wrapReel);
+    }
+
+  }); // end DOMContentLoaded
+  </script>
+</body>
+</html>
